@@ -6,7 +6,7 @@
 
 export const site = {
   name: "Run the Reach",
-  /** Short lowercase slug used in the terminal command: `$ <cli> run outbound-engine` */
+  /** Short lowercase slug shown in the hero pipeline card: `$ <cli> run outbound-engine` */
   cli: "runthereach",
   domain: "runthereach.com",
   /** Used for metadataBase / OpenGraph. Or set NEXT_PUBLIC_SITE_URL in Vercel. */

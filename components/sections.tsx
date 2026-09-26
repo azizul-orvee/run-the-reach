@@ -1,7 +1,7 @@
 import { faq, finalCta, hero, how, marquee, math, pricing, problem, site, system } from "@/content/site";
 import { Reveal } from "./reveal";
 import { CtaButton, LastWord, Section, SectionHeader } from "./section";
-import { Terminal } from "./terminal";
+import { PipelineRun } from "./pipeline-run";
 
 /* Page sections. All copy comes from content/site.ts. */
 
@@ -29,7 +29,13 @@ export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
       <Radar className="-top-56" />
-      <div className="relative mx-auto max-w-5xl px-5 pb-24 pt-16 text-center sm:px-8 sm:pt-28">
+      <div className="relative mx-auto max-w-7xl px-5 pt-5 sm:px-8">
+        <p className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
+          <span className="h-px w-6 bg-accent" aria-hidden />
+          {site.motto}
+        </p>
+      </div>
+      <div className="relative mx-auto max-w-5xl px-5 pb-24 pt-12 text-center sm:px-8 sm:pt-20">
         <p className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-slip/70 px-4 py-1.5 font-mono text-xs">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
           {hero.eyebrow}
@@ -45,7 +51,7 @@ export function Hero() {
           </CtaButton>
         </div>
         <div className="mx-auto mt-16 max-w-2xl text-left">
-          <Terminal />
+          <PipelineRun />
         </div>
       </div>
     </section>
@@ -257,6 +263,7 @@ export function FinalCta() {
           <h2 className="font-display mx-auto max-w-3xl text-[clamp(2.5rem,7vw,5.5rem)] font-semibold leading-[1] tracking-[-0.045em] text-balance">
             <LastWord text={finalCta.headline} />
           </h2>
+          <p className="mt-6 font-mono text-sm uppercase tracking-[0.3em] text-accent">{site.motto}</p>
           <div className="mt-10">
             <CtaButton href={site.booking}>{finalCta.button} →</CtaButton>
           </div>

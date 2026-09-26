@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/instrument-sans";
 import "@fontsource-variable/syne";
 import "@fontsource-variable/martian-mono";
+import "@fontsource/chakra-petch/500.css";
 import { site } from "@/content/site";
 import "./globals.css";
 

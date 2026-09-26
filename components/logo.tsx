@@ -17,7 +17,7 @@ export function Logo() {
   return (
     <span className="flex items-center gap-3.5">
       <LogoMark className="h-9 w-9 text-accent" />
-      <span className="text-[12px] font-medium uppercase tracking-[0.34em]">{site.name}</span>
+      <span className="text-[13px] font-medium uppercase tracking-[0.28em] sm:tracking-[0.34em]">{site.name}</span>
     </span>
   );
 }

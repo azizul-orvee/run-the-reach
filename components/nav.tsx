@@ -11,7 +11,11 @@ export function Nav() {
         </a>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {nav.links.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm font-medium underline-offset-4 hover:underline">
+            <a
+              key={l.href}
+              href={l.href}
+              className="font-nav text-sm font-medium uppercase tracking-[0.06em] underline-offset-4 hover:underline"
+            >
               {l.label}
             </a>
           ))}
