@@ -9,7 +9,7 @@ export function Nav() {
         <a href="#top" aria-label={`${site.name} home`}>
           <Logo />
         </a>
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
           {nav.links.map((l) => (
             <a
               key={l.href}
@@ -21,7 +21,7 @@ export function Nav() {
           ))}
         </nav>
         <CtaButton href={site.booking} className="!px-5 !py-2.5">
-          <span className="hidden sm:inline">{nav.cta}</span>
+          <span className="hidden sm:inline">{site.cta}</span>
           <span className="sm:hidden">{nav.ctaShort}</span>
         </CtaButton>
       </div>

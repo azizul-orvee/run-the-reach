@@ -1,106 +1,65 @@
-import { faq, finalCta, hero, how, marquee, math, pricing, problem, site, system } from "@/content/site";
+import { about, faq, finalCta, hero, loop, pricing, signals, site, trace } from "@/content/site";
 import { Reveal } from "./reveal";
-import { CtaButton, LastWord, Section, SectionHeader } from "./section";
-import { PipelineRun } from "./pipeline-run";
+import { Accented, PrimaryCta, Section, SectionHeader, SectionTag } from "./section";
+import { RadarBlips, RadarField } from "./radar";
+import { LoopDiagram } from "./loop-diagram";
 
 /* Page sections. All copy comes from content/site.ts. */
-
-function Radar({ className = "" }: { className?: string }) {
-  return (
-    <div
-      aria-hidden
-      className={`pointer-events-none absolute left-1/2 h-[60rem] w-[60rem] -translate-x-1/2 [mask-image:radial-gradient(circle,#000_15%,transparent_68%)] ${className}`}
-    >
-      <svg viewBox="-500 -500 1000 1000" className="absolute inset-0 text-ink" fill="none">
-        {[100, 200, 300, 400, 490].map((r) => (
-          <circle key={r} r={r} stroke="currentColor" strokeOpacity={0.12} />
-        ))}
-        <line x1={-500} x2={500} stroke="currentColor" strokeOpacity={0.12} />
-        <line y1={-500} y2={500} stroke="currentColor" strokeOpacity={0.12} />
-        <circle cx={210} cy={-150} r={5} className="fill-accent" />
-        <circle cx={-260} cy={170} r={4} className="fill-accent" fillOpacity={0.6} />
-      </svg>
-      <div className="radar-sweep absolute inset-0 rounded-full" />
-    </div>
-  );
-}
 
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
-      <Radar className="-top-56" />
-      <div className="relative mx-auto max-w-7xl px-5 pt-5 sm:px-8">
-        <p className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
-          <span className="h-px w-6 bg-accent" aria-hidden />
-          {site.motto}
-        </p>
-      </div>
-      <div className="relative mx-auto max-w-5xl px-5 pb-24 pt-12 text-center sm:px-8 sm:pt-20">
-        <p className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-slip/70 px-4 py-1.5 font-mono text-xs">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+      <RadarField className="h-[34rem] w-[34rem] sm:h-[44rem] sm:w-[44rem] lg:h-[50rem] lg:w-[50rem]" />
+      <RadarBlips variant="around" />
+      <div className="relative mx-auto max-w-4xl px-5 pb-24 pt-20 text-center sm:px-8 sm:pb-32 sm:pt-28">
+        <p className="inline-flex max-w-full items-center gap-2 rounded-full border border-ink/15 bg-slip/70 px-3 py-1.5 font-mono text-[10px] sm:px-4 sm:text-xs">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
           {hero.eyebrow}
         </p>
-        <h1 className="font-display mt-8 text-[clamp(2.75rem,8vw,6.5rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-balance">
-          <LastWord text={hero.headline} />
+        <h1 className="font-display mt-7 text-[clamp(2.1rem,6vw,4.75rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-balance">
+          <Accented text={hero.headline} />
         </h1>
-        <p className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl">{hero.sub}</p>
+        <p className="mx-auto mt-6 max-w-2xl text-muted sm:text-lg">{hero.sub}</p>
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-          <CtaButton href={site.booking}>{hero.primaryCta} →</CtaButton>
-          <CtaButton href="#how-it-works" variant="ghost">
+          <PrimaryCta />
+          <a
+            href="#loop"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/40 px-6 py-3.5 text-sm font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+          >
             {hero.secondaryCta}
-          </CtaButton>
+          </a>
         </div>
-        <div className="mx-auto mt-16 max-w-2xl text-left">
-          <PipelineRun />
-        </div>
+        <RadarBlips variant="grid" />
       </div>
     </section>
   );
 }
 
-export function Marquee() {
-  const row = (hidden: boolean) => (
-    <ul className="flex shrink-0 items-center" aria-hidden={hidden || undefined}>
-      {marquee.tools.map((t) => (
-        <li key={t} className="flex items-center font-mono text-sm">
-          <span className="px-5">{t}</span>
-          <span className="text-accent" aria-hidden>
-            /
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
+export function Signals() {
   return (
-    <section className="border-y border-ink/10" aria-label={marquee.label}>
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-5 py-5 sm:px-8">
-        <p className="hidden shrink-0 font-mono text-xs uppercase tracking-widest text-muted sm:block">{marquee.label}</p>
-        <div className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
-          <div className="marquee-track flex w-max">
-            {row(false)}
-            {row(true)}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const bento = ["lg:col-span-2", "", "", "lg:col-span-2"];
-
-export function Problem() {
-  return (
-    <Section>
-      <SectionHeader center num={problem.num} label={problem.label} title={problem.headline} />
-      <div className="grid gap-4 lg:grid-cols-3">
-        {problem.cards.map((c, i) => (
-          <Reveal key={c.title} delay={i * 80} className={bento[i]}>
-            <div className="flex h-full flex-col justify-between gap-10 rounded-2xl border border-ink/10 bg-slip p-7 sm:p-9">
-              <span className="font-mono text-xs text-accent">// 0{i + 1}</span>
-              <div>
-                <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">{c.title}</h3>
-                <p className="mt-3 max-w-md text-muted">{c.body}</p>
+    <Section id="signals">
+      <SectionHeader center tag={signals.tag} title={signals.headline} sub={signals.sub} />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {signals.cards.map((c, i) => (
+          <Reveal key={c.name} delay={(i % 3) * 80}>
+            <div className="flex h-full flex-col rounded-2xl border border-ink/10 bg-slip p-5">
+              <div aria-hidden className="rounded-xl border border-ink/10 bg-paper/60 p-3">
+                <div className="flex items-start gap-2.5">
+                  <span className="relative mt-1 flex h-1.5 w-1.5 shrink-0">
+                    <span className="blip-ring absolute inset-0 rounded-full bg-accent" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[11px] font-medium">{c.mock.title}</p>
+                    <p className="mt-0.5 truncate font-mono text-[9px] text-muted">{c.mock.meta}</p>
+                  </div>
+                  <span className="shrink-0 rounded border border-accent/40 px-1.5 py-0.5 font-mono text-[9px] text-accent">
+                    {c.mock.tag}
+                  </span>
+                </div>
               </div>
+              <h3 className="mt-5 text-lg font-semibold tracking-tight">{c.name}</h3>
+              <p className="mt-2 text-sm text-muted">{c.why}</p>
             </div>
           </Reveal>
         ))}
@@ -109,32 +68,121 @@ export function Problem() {
   );
 }
 
-export function System() {
+export function Loop() {
   return (
-    <Section id="system" className="bg-paper-2">
-      <SectionHeader center num={system.num} label={system.label} title={system.name} sub={system.sub} />
-      <div className="mx-auto max-w-4xl">
-        {system.layers.map((l, i) => (
-          <Reveal key={l.id}>
-            <div className="rounded-2xl border border-ink/10 bg-slip p-6 sm:p-8 md:grid md:grid-cols-[3rem_1fr_auto] md:items-center md:gap-8">
-              <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent font-mono text-sm font-bold text-on-accent md:mb-0">
-                {l.id}
+    <Section id="loop" className="bg-paper-2">
+      <SectionHeader center tag={loop.tag} title={loop.headline} sub={loop.sub} />
+      <Reveal>
+        <LoopDiagram />
+      </Reveal>
+    </Section>
+  );
+}
+
+/** The single-lead walkthrough: signal → research → the email it produced. */
+export function Trace() {
+  return (
+    <Section id="trace">
+      <SectionHeader center tag={trace.tag} title={trace.headline} sub={trace.sub} />
+      <div className="mx-auto grid max-w-5xl gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-start">
+        <Reveal className="flex flex-col gap-4">
+          <div className="rounded-2xl border border-ink/10 bg-slip p-5">
+            <SectionTag>{trace.detected.label}</SectionTag>
+            <div className="mt-4 flex items-start gap-3 rounded-xl border border-accent/40 bg-accent/10 p-3">
+              <span className="relative mt-1 flex h-1.5 w-1.5 shrink-0" aria-hidden>
+                <span className="blip-ring absolute inset-0 rounded-full bg-accent" />
+                <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
               </span>
-              <div>
-                <h3 className="text-2xl font-semibold tracking-tight">{l.title}</h3>
-                <p className="mt-2 text-muted">{l.body}</p>
+              <div className="min-w-0">
+                <p className="text-sm font-medium">{trace.detected.title}</p>
+                <p className="mt-0.5 font-mono text-[10px] text-muted">{trace.detected.meta}</p>
               </div>
-              <ul className="mt-5 flex flex-wrap gap-2 md:mt-0 md:max-w-[15rem] md:justify-end">
-                {l.tools.map((t) => (
-                  <li key={t} className="rounded-md border border-ink/15 px-2.5 py-1 font-mono text-[11px] text-muted">
-                    {t}
-                  </li>
-                ))}
-              </ul>
             </div>
-            {i < system.layers.length - 1 && <div className="mx-auto h-6 w-px bg-ink/20" aria-hidden />}
-          </Reveal>
-        ))}
+          </div>
+
+          <div className="mx-auto h-5 w-px bg-accent/30" aria-hidden />
+
+          <div className="rounded-2xl border border-ink/10 bg-slip p-5">
+            <SectionTag>{trace.research.label}</SectionTag>
+            <ul className="mt-4 space-y-2">
+              {trace.research.bullets.map((b) => (
+                <li key={b} className="flex gap-2.5 font-mono text-[11px] leading-relaxed text-muted">
+                  <span className="text-accent" aria-hidden>
+                    ›
+                  </span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+
+        <Reveal delay={120}>
+          <div className="rounded-2xl border border-ink/10 bg-slip p-5">
+            <SectionTag>{trace.email.label}</SectionTag>
+            <div className="mt-4 overflow-hidden rounded-xl border border-ink/10 bg-paper/60">
+              <dl className="border-b border-ink/10 px-4 py-3 font-mono text-[10px]">
+                {[
+                  ["From", trace.email.from],
+                  ["To", trace.email.to],
+                  ["Subject", trace.email.subject],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex gap-2 py-0.5">
+                    <dt className="w-14 shrink-0 uppercase tracking-[0.15em] text-muted">{k}</dt>
+                    <dd className="min-w-0 break-words">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="space-y-3 px-4 py-4 text-sm leading-relaxed">
+                {trace.email.lines.map((line, i) => (
+                  <p key={i}>
+                    {line.map((part, j) =>
+                      part.hl ? (
+                        <mark key={j} className="bg-accent/20 font-medium text-accent">
+                          {part.text}
+                        </mark>
+                      ) : (
+                        <span key={j}>{part.text}</span>
+                      ),
+                    )}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <p className="mt-4 font-mono text-[10px] leading-relaxed text-muted">{trace.email.note}</p>
+          </div>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+export function About() {
+  return (
+    <Section id="about" className="bg-paper-2">
+      <div className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-10">
+        <Reveal>
+          {/* Drop a photo at public/founder.jpg; until then the frame shows initials. */}
+          <div
+            className="relative grid h-32 w-32 shrink-0 place-items-center overflow-hidden rounded-2xl border border-ink/15 bg-slip bg-cover bg-center sm:h-40 sm:w-40"
+            style={{ backgroundImage: `url(${about.photo})` }}
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Photo</span>
+          </div>
+        </Reveal>
+        <Reveal delay={80}>
+          <SectionTag>{about.tag}</SectionTag>
+          <h2 className="font-display mt-4 text-[clamp(1.6rem,4.2vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.035em] text-balance">
+            <Accented text={about.headline} />
+          </h2>
+          <p className="mt-5 font-semibold">{about.name}</p>
+          <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted">{about.role}</p>
+          <div className="mt-5 space-y-3 text-muted">
+            {about.lines.map((l) => (
+              <p key={l}>{l}</p>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </Section>
   );
@@ -143,89 +191,35 @@ export function System() {
 export function Pricing() {
   return (
     <Section id="pricing">
-      <SectionHeader center num={pricing.num} label={pricing.label} title={pricing.headline} />
-      <div className="mx-auto max-w-5xl space-y-5">
+      <SectionHeader center tag={pricing.tag} title={pricing.headline} />
+      <div className="mx-auto grid max-w-4xl items-start gap-4 md:grid-cols-2">
         {pricing.plans.map((p, i) => (
-          <Reveal key={p.name} delay={i * 80}>
+          <Reveal key={p.name} delay={i * 80} className="h-full">
             <div
-              className={`relative grid gap-6 rounded-2xl border p-6 sm:p-8 md:grid-cols-[1fr_1.2fr_auto] md:items-center md:gap-10 ${
+              className={`flex h-full flex-col rounded-2xl border p-6 sm:p-7 ${
                 p.highlight ? "border-accent bg-accent/5" : "border-ink/10 bg-slip"
               }`}
             >
-              {p.badge && (
-                <span className="absolute -top-3 left-6 rounded-full bg-accent px-3 py-1 font-mono text-[10px] font-semibold tracking-wider text-on-accent">
-                  {p.badge}
-                </span>
-              )}
-              <div>
-                <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">{p.name}</h3>
-                <p className="font-display mt-3 text-5xl font-semibold tracking-[-0.04em]">{p.price}</p>
-                <p className="mt-1 font-mono text-xs text-muted">{p.unit}</p>
-              </div>
-              <div>
-                <p className="text-lg leading-snug">{p.body}</p>
-                <ul className="mt-4 grid gap-x-6 gap-y-1.5 text-sm text-muted sm:grid-cols-2">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex gap-2">
-                      <span className="text-accent" aria-hidden>
-                        ✓
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <CtaButton href={site.booking} variant={p.highlight ? "primary" : "ghost"}>
-                {p.cta}
-              </CtaButton>
+              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">{p.name}</h3>
+              <p className="font-display mt-3 text-4xl font-semibold tracking-[-0.04em]">{p.price}</p>
+              <p className="mt-1 font-mono text-xs text-muted">{p.unit}</p>
+              <p className="mt-5 text-muted">{p.body}</p>
+              <ul className="mt-5 space-y-2 text-sm">
+                {p.features.map((f) => (
+                  <li key={f} className="flex gap-2.5">
+                    <span className="text-accent" aria-hidden>
+                      ✓
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <PrimaryCta className="mt-7 w-full" variant={p.highlight ? "primary" : "ghost"} arrow={false} />
             </div>
           </Reveal>
         ))}
       </div>
-      <p className="mt-10 text-center font-mono text-sm text-muted">{pricing.note}</p>
-    </Section>
-  );
-}
-
-export function HowItWorks() {
-  return (
-    <Section id="how-it-works" className="bg-paper-2">
-      <SectionHeader center num={how.num} label={how.label} title={how.headline} />
-      <ol className="mx-auto max-w-3xl space-y-14 border-l border-ink/20 pl-8 sm:pl-12">
-        {how.steps.map((s, i) => (
-          <Reveal key={s.title}>
-            <li className="relative">
-              <span
-                className="absolute -left-[2.35rem] top-2 h-2.5 w-2.5 rounded-full bg-accent sm:-left-[3.35rem]"
-                aria-hidden
-              />
-              <span className="font-mono text-xs text-accent">STEP 0{i + 1}</span>
-              <h3 className="font-display mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">{s.title}</h3>
-              <p className="mt-3 max-w-md text-lg text-muted">{s.body}</p>
-            </li>
-          </Reveal>
-        ))}
-      </ol>
-    </Section>
-  );
-}
-
-export function TheMath() {
-  return (
-    <Section>
-      <SectionHeader center num={math.num} label={math.label} title={math.headline} sub={math.sub} />
-      <div className="grid gap-4 md:grid-cols-3">
-        {math.stats.map((s, i) => (
-          <Reveal key={s.label} delay={i * 80}>
-            <div className="flex h-full flex-col justify-between gap-12 rounded-2xl border border-ink/10 bg-slip p-7 sm:p-9">
-              <p className="font-mono text-xs uppercase tracking-[0.15em] text-muted">{s.label}</p>
-              <p className="font-display text-5xl font-semibold leading-none tracking-[-0.04em] text-accent sm:text-6xl">
-                {s.value}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
+      <p className="mt-8 text-center font-mono text-sm text-muted">{pricing.note}</p>
     </Section>
   );
 }
@@ -233,12 +227,12 @@ export function TheMath() {
 export function Faq() {
   return (
     <Section id="faq" className="bg-paper-2">
-      <SectionHeader center num={faq.num} label={faq.label} title={faq.headline} />
+      <SectionHeader center tag={faq.tag} title={faq.headline} />
       <Reveal className="mx-auto max-w-3xl space-y-3">
         {faq.items.map((item) => (
-          <details key={item.q} className="group rounded-2xl border border-ink/10 bg-slip px-6 py-5">
-            <summary className="flex cursor-pointer items-center justify-between gap-6">
-              <span className="text-lg font-medium sm:text-xl">{item.q}</span>
+          <details key={item.q} className="group rounded-2xl border border-ink/10 bg-slip px-5 py-4 sm:px-6 sm:py-5">
+            <summary className="flex cursor-pointer items-center justify-between gap-4">
+              <span className="font-medium sm:text-lg">{item.q}</span>
               <span
                 className="faq-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-ink/30 font-mono text-lg transition-transform"
                 aria-hidden
@@ -246,7 +240,7 @@ export function Faq() {
                 +
               </span>
             </summary>
-            <p className="mt-4 text-muted">{item.a}</p>
+            <p className="mt-4 text-sm text-muted sm:text-base">{item.a}</p>
           </details>
         ))}
       </Reveal>
@@ -256,18 +250,20 @@ export function Faq() {
 
 export function FinalCta() {
   return (
-    <section className="px-5 pb-20 pt-4 sm:px-8 sm:pb-28">
-      <Reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-ink/10 bg-slip px-6 py-20 text-center sm:py-28">
-        <Radar className="-top-72" />
+    <section className="px-5 pb-16 pt-4 sm:px-8 sm:pb-24">
+      <Reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-ink/10 bg-slip px-5 py-16 text-center sm:px-6 sm:py-20">
+        <RadarField className="h-[34rem] w-[34rem] sm:h-[44rem] sm:w-[44rem]" />
         <div className="relative">
-          <h2 className="font-display mx-auto max-w-3xl text-[clamp(2.5rem,7vw,5.5rem)] font-semibold leading-[1] tracking-[-0.045em] text-balance">
-            <LastWord text={finalCta.headline} />
+          <h2 className="font-display mx-auto max-w-3xl text-[clamp(1.75rem,4.8vw,3.75rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-balance">
+            <Accented text={finalCta.headline} />
           </h2>
-          <p className="mt-6 font-mono text-sm uppercase tracking-[0.3em] text-accent">{site.motto}</p>
-          <div className="mt-10">
-            <CtaButton href={site.booking}>{finalCta.button} →</CtaButton>
+          <p className="mt-5 font-mono text-xs uppercase tracking-[0.25em] text-accent sm:text-sm sm:tracking-[0.3em]">
+            {site.motto}
+          </p>
+          <div className="mt-8">
+            <PrimaryCta />
           </div>
-          <p className="mt-5 font-mono text-xs text-muted">{finalCta.note}</p>
+          <p className="mx-auto mt-5 max-w-md text-xs text-muted sm:text-sm">{finalCta.note}</p>
         </div>
       </Reveal>
     </section>

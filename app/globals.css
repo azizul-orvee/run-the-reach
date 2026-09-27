@@ -65,43 +65,46 @@ body::before {
   mask-image: linear-gradient(#000, transparent 85%);
 }
 
-/* pipeline run card */
-@keyframes fill {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-.stage-fill {
-  animation: fill 0.9s linear forwards;
-}
-@keyframes spin-ring {
+/* radar: slow conic sweep over the rings */
+@keyframes radar-spin {
   to {
     transform: rotate(360deg);
   }
 }
-.stage-spinner {
-  animation: spin-ring 0.8s linear infinite;
-}
-@keyframes pulse-dot {
-  50% {
-    opacity: 0.3;
-  }
-}
-.pulse-dot {
-  animation: pulse-dot 1.2s ease-in-out infinite;
+.radar-sweep {
+  background: conic-gradient(from 0deg, transparent 0deg, color-mix(in srgb, var(--accent) 16%, transparent) 62deg, transparent 64deg);
+  animation: radar-spin 12s linear infinite;
 }
 
-.radar-sweep {
-  background: conic-gradient(from 0deg, transparent 0deg, color-mix(in srgb, var(--accent) 20%, transparent) 70deg, transparent 71deg);
-  animation: spin 14s linear infinite;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+/* radar blips: fade in as the sweep passes, then fade out */
+@keyframes blip-fade {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
   }
+  6%,
+  46% {
+    opacity: 1;
+  }
+}
+.blip {
+  opacity: 0;
+  animation: blip-fade 11s ease-in-out infinite;
+}
+@keyframes blip-ping {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.blip-ring {
+  animation: blip-ping 11s ease-out infinite;
 }
 
 .reveal {
@@ -112,24 +115,6 @@ body::before {
 .reveal.is-visible {
   opacity: 1;
   transform: none;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.marquee-track {
-  animation: marquee 45s linear infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-.cursor {
-  animation: blink 1s steps(1) infinite;
 }
 
 details > summary {
@@ -154,12 +139,12 @@ details[open] .faq-icon {
     transform: none;
     transition: none;
   }
-  .marquee-track,
   .radar-sweep,
-  .stage-fill,
-  .stage-spinner,
-  .pulse-dot,
-  .cursor {
+  .blip-ring {
+    animation: none;
+  }
+  .blip {
+    opacity: 1;
     animation: none;
   }
 }

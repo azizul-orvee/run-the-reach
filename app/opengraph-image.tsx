@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { hero, site } from "@/content/site";
+import { hero, plain, site } from "@/content/site";
 
 export const alt = site.title;
 export const size = { width: 1200, height: 630 };
@@ -27,7 +27,7 @@ export default function OgImage() {
           </svg>
           {site.name}
         </div>
-        <div style={{ fontSize: 92, fontWeight: 700, lineHeight: 1, letterSpacing: -3 }}>{hero.headline}</div>
+        <div style={{ fontSize: 92, fontWeight: 700, lineHeight: 1, letterSpacing: -3 }}>{plain(hero.headline)}</div>
         <div style={{ fontSize: 30, color: "#FFB31A", fontWeight: 600 }}>{site.motto}</div>
       </div>
     ),

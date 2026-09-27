@@ -1,3 +1,4 @@
+import { site } from "@/content/site";
 import { Reveal } from "./reveal";
 
 export function Section({
@@ -13,32 +14,46 @@ export function Section({
 }) {
   return (
     <section id={id} className={`relative ${border ? "border-t border-ink/15" : ""} ${className}`}>
-      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-32">{children}</div>
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">{children}</div>
     </section>
   );
 }
 
-/** Renders the last word of a headline in the accent color. */
-export function LastWord({ text }: { text: string }) {
-  const i = text.lastIndexOf(" ");
-  if (i === -1) return <span className="text-accent">{text}</span>;
+/**
+ * Renders a headline, with the parts marked `|like this|` in the accent colour.
+ * Odd-indexed segments are the marked ones.
+ */
+export function Accented({ text }: { text: string }) {
   return (
     <>
-      {text.slice(0, i)} <span className="text-accent">{text.slice(i + 1)}</span>
+      {text.split("|").map((part, i) =>
+        i % 2 ? (
+          <span key={i} className="text-accent">
+            {part}
+          </span>
+        ) : (
+          part
+        ),
+      )}
     </>
   );
 }
 
+/** The small monospace radar tag that labels each section, e.g. "◉ SIGNALS". */
+export function SectionTag({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p className={`font-mono text-[11px] uppercase tracking-[0.25em] text-accent ${className}`}>{children}</p>
+  );
+}
+
 export function SectionHeader({
-  num,
-  label,
+  tag,
   title,
   sub,
-  className = "mb-14 sm:mb-20",
+  className = "mb-10 sm:mb-14",
   center = false,
 }: {
-  num: string;
-  label: string;
+  tag: string;
   title: string;
   sub?: string;
   className?: string;
@@ -46,15 +61,11 @@ export function SectionHeader({
 }) {
   return (
     <Reveal className={`max-w-4xl ${center ? "mx-auto text-center" : ""} ${className}`}>
-      <p className={`flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] ${center ? "justify-center" : ""}`}>
-        <span className="text-accent">{num}</span>
-        <span className="h-px w-8 bg-current opacity-40" />
-        <span className="opacity-70">{label}</span>
-      </p>
-      <h2 className="font-display mt-6 text-[clamp(2.25rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.035em] text-balance">
-        <LastWord text={title} />
+      <SectionTag>{tag}</SectionTag>
+      <h2 className="font-display mt-5 text-[clamp(1.6rem,4.2vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.035em] text-balance">
+        <Accented text={title} />
       </h2>
-      {sub && <p className={`mt-6 max-w-2xl text-lg opacity-70 ${center ? "mx-auto" : ""}`}>{sub}</p>}
+      {sub && <p className={`mt-5 max-w-2xl opacity-70 sm:text-lg ${center ? "mx-auto" : ""}`}>{sub}</p>}
     </Reveal>
   );
 }
@@ -82,5 +93,23 @@ export function CtaButton({
     >
       {children}
     </a>
+  );
+}
+
+/** The site-wide CTA. One label, one destination, set in content/site.ts. */
+export function PrimaryCta({
+  variant = "primary",
+  className = "",
+  arrow = true,
+}: {
+  variant?: keyof typeof variants;
+  className?: string;
+  arrow?: boolean;
+}) {
+  return (
+    <CtaButton href={site.booking} variant={variant} className={className}>
+      {site.cta}
+      {arrow ? " →" : ""}
+    </CtaButton>
   );
 }

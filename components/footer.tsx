@@ -2,32 +2,23 @@ import { footer, site } from "@/content/site";
 
 export function Footer() {
   return (
-    <footer className="overflow-hidden bg-deep text-on-deep">
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 pt-16 sm:px-8 md:flex-row md:justify-between">
+    <footer className="bg-deep text-on-deep">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 sm:px-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="font-display text-3xl text-accent sm:text-4xl">{site.motto}</p>
-          <p className="mt-4 max-w-sm text-sm opacity-70">{site.tagline}</p>
+          <p className="font-display text-lg font-semibold">{site.name}</p>
+          <p className="mt-1 text-sm opacity-70">{site.motto}</p>
         </div>
-        <div className="flex flex-col gap-2 text-sm">
+        <div className="flex flex-col gap-2 text-sm sm:items-end">
           <a href={`mailto:${site.email}`} className="underline-offset-4 hover:underline">
             {site.email}
           </a>
           <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
-            LinkedIn ↗
+            {footer.linkedinLabel} ↗
           </a>
         </div>
       </div>
-      <p
-        aria-hidden
-        className="font-display mt-12 select-none whitespace-nowrap px-5 text-[clamp(3rem,12vw,14rem)] font-medium leading-[0.8] tracking-[-0.05em] text-on-deep/10 sm:px-8"
-      >
-        {site.name}
-      </p>
-      <div className="mx-auto flex max-w-7xl flex-col gap-2 border-t border-on-deep/15 px-5 py-6 font-mono text-xs opacity-70 sm:flex-row sm:justify-between sm:px-8">
-        <span>
-          © {new Date().getFullYear()} {site.name}
-        </span>
-        <span>{footer.builtOn}</span>
+      <div className="mx-auto max-w-7xl border-t border-on-deep/15 px-5 py-5 font-mono text-xs opacity-70 sm:px-8">
+        © {new Date().getFullYear()} {site.name}
       </div>
     </footer>
   );
