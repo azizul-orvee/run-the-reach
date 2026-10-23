@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/instrument-sans";
-import "@fontsource-variable/syne";
-import "@fontsource-variable/martian-mono";
-import "@fontsource/chakra-petch/500.css";
+import "@fontsource-variable/bricolage-grotesque";
 import { site } from "@/content/site";
+import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: site.title,
+  title: { default: site.title, template: `%s — ${site.name}` },
   description: site.description,
   openGraph: {
     type: "website",
@@ -26,18 +26,20 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0B0D",
-  colorScheme: "dark",
+  themeColor: "#F7F1E6",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-GB">
       <body>
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        {children}
+        <Nav />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

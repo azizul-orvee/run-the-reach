@@ -2,6 +2,85 @@
 
 All changes to this project, newest first. Every AI tool and human must add an entry here after each change.
 
+## 2026-10-24 — Committed and pushed the local-business site to `main`
+
+**Type:** deploy
+**Tool:** Claude Code (Opus 5.5)
+**What changed:**
+- Committed all of the 2026-10-24 work below (rebuild, AI-first copy, About/Terms/Privacy, legal edits, email) in one commit on `main` and pushed it to `origin/main`
+**Why:** Owner asked to commit and push.
+**Notes / gotchas:** The push makes Vercel replace the live GTM site at `run-the-reach.vercel.app` with this one. The GTM site remains on branch `GTM`. Placeholders went live as known: `site.booking` (`[BOOKING LINK]`), `site.linkedin`, `about.name`.
+
+## 2026-10-24 — Contact email set; "Run the Reach" in legal pages; two privacy sections removed
+
+**Type:** content
+**Tool:** Claude Code (Opus 5.5)
+**What changed:**
+- `site.email` is now `contact@runthereach.com` (`content/site.ts`), replacing `[hello@domain.com]` in the footer `mailto:` and every legal contact line
+- Legal pages name the business as **Run the Reach** (from `site.name`) instead of "RUNTHEREACH": "This website is run by Run the Reach." The `company` constant in `content/legal.ts` is gone
+- Removed the Privacy policy's **"Your rights"** and **"International transfers"** sections (`content/legal.ts`); the contents list updates automatically
+**Why:** Owner's instruction: use the real contact address, don't use the all-caps name, and drop those two sections.
+**Notes / gotchas:** Not committed. Verified: `npm run lint` clean; `npm run build` → `✓ Compiled successfully`; the built HTML of all four pages contains no "RUNTHEREACH", no placeholder email and neither removed heading; text read back in the browser. UK GDPR normally expects a privacy notice to tell people their rights and how data leaving the UK is protected. Removing both was the owner's decision; STATUS flags it for whoever reviews the policy.
+
+## 2026-10-24 — Legal pages: company named as RUNTHEREACH, identifiers removed
+
+**Type:** content
+**Tool:** Claude Code (Opus 5.5)
+**What changed:**
+- `content/legal.ts`: the business is named as **RUNTHEREACH** ("This website is run by RUNTHEREACH (“Run the Reach”)") in both Privacy and Terms › Who we are
+- Removed every line that needed a company identifier: legal name, company number, registered address, country of registration, the ICO registration sentence, and the Terms "Governing law" section
+- Replaced the `[BOOKING PROVIDER]` placeholder with "a third-party booking tool"
+**Why:** Owner's instruction: the company name is RUNTHEREACH, and they don't want to show a legal name, company number, address, ICO number or similar for now.
+**Notes / gotchas:** Not committed. Verified: `npm run lint` clean, `npm run build` → `✓ Compiled successfully`, built `/privacy` and `/terms` contain no company placeholders, and both pages were read in the browser. The ICO is still named under Privacy › Complaints: that's the regulator's contact details, which people have a right to, not the company's registration. The only brackets left on those pages come from site-wide config: the email in the contact lines, plus the booking link and LinkedIn in the nav and footer.
+
+## 2026-10-24 — AI-first messaging, About/Terms/Privacy pages, tyre fitters removed
+
+**Type:** feature
+**Tool:** Claude Code (Opus 5.5)
+**What changed:**
+- Removed "Tyre fitters" everywhere: the trades list, the About lines and the FAQ answer (`content/site.ts`)
+- The trailing "and other local services" is now plain text under the trade tags, not a dashed chip. A dashed outline read as an "add more" button (`components/sections.tsx` › `TradeList`)
+- AI-first is now visible across the homepage: positioning changed to "AI-first customer acquisition for local businesses" (`site.title`, `site.description`, `site.tagline`, `hero.eyebrow`), AI in the hero sub-line and first trust tick, the hero phone now reads "AI reply sent" / "Job booked by AI", AI wording in Services, How it works, Promises and a new FAQ "What does AI-first actually mean?"
+- New homepage section `Ai` (`#ai`, content `ai` in `content/site.ts`): six AI capabilities (AI receptionist, instant replies, missed-call text-back, quote follow-up, smart booking, AI-tuned Google Ads) plus a custom-software note. Section order: Hero, Problem, Ai, Services, How, Trades, Promises, About, Faq, FinalCta (`app/page.tsx`)
+- New pages: `/about` (`app/about/page.tsx`, copy in new `content/pages.ts`), `/privacy` and `/terms` (`app/privacy/page.tsx`, `app/terms/page.tsx`, copy in new `content/legal.ts`, rendered by new `components/legal-page.tsx` with a sticky contents list on lg+)
+- `Nav` and `Footer` moved from `app/page.tsx` into `app/layout.tsx` so every page has them. Nav links now point at `/#…` so they work from inner pages, and there's an "About" link. Footer gained About / Terms / Privacy links
+- New `lib/metadata.ts` › `pageMetadata()`: per-page title, description, canonical, OpenGraph and Twitter, including the share image. Root layout title is now a template (`%s — Run the Reach`)
+- New primitives: `PageHeader` (inner-page `<h1>`, deliberately not faded in) in `components/section.tsx`; `TradeList` in `components/sections.tsx`; icons `phone`, `sparkles` in `components/icons.tsx`
+- `<html lang="en-GB">`
+**Why:** Owner asked to drop tyre fitters, make the AI-first angle obvious to every visitor, and add About, Terms and Privacy pages with drafted content.
+**Notes / gotchas:** Not committed or pushed. Verified: `npm run lint` clean; `npm run build` → `✓ Compiled successfully`, 8 static routes; built HTML checked for each page's `<title>`, canonical, `og:url`, `og:image` and a single `<h1>`; all four pages checked in the browser with no horizontal overflow at 375px. **The legal pages are drafts, not legal advice**, and contain `[BRACKET]` company placeholders. Several privacy statements are commitments the owner must make true (see STATUS). Found and fixed during the work: setting `openGraph` per page silently dropped the share image (Next replaces the whole block), and `PageHeader` was first wrapped in the scroll fade, so the `<h1>` started invisible.
+
+## 2026-10-24 — Rebuilt `main` as a local-business customer acquisition site
+
+**Type:** feature
+**Tool:** Claude Code (Opus 5.5)
+**What changed:**
+- Repositioned the whole site from signal-based outbound for SaaS to **customer acquisition systems for local businesses** (Google Ads leads, plus AI follow-up and custom software). The old site is untouched on branch `GTM`
+- Rewrote all copy in `content/site.ts`. New exports: `problem`, `services`, `how`, `trades`, `promises`. Removed: `signals`, `loop`, `trace`, `pricing`. CTA is now "Book a call" → `site.booking` (`[BOOKING LINK]`). No prices, no results figures
+- New sections in `components/sections.tsx`: Hero, Problem, Services, How, Trades, Promises, About, Faq, FinalCta. Order updated in `app/page.tsx`
+- New `components/phone.tsx`: the hero phone, where enquiry → instant reply → job booked notifications land in order via CSS, once
+- New `components/icons.tsx`: inline Lucide-style line icons, typed by name
+- Removed `components/radar.tsx` and `components/loop-diagram.tsx`
+- New warm theme in `app/globals.css`: cream/ink/burnt-orange tokens plus `--highlight` and `--good`, paper grain, `.mark` highlighter for piped headline words, `.notif`/`.ping` animations, button press feedback, focus ring, reduced-motion opt-outs for all of it
+- `components/section.tsx`: highlighter accents, accent-rule section tags, chunkier 48px buttons with a `light` variant; dropped the section top borders in favour of alternating backgrounds
+- `components/logo.tsx`, `nav.tsx`, `footer.tsx` restyled: rounded logo strokes, display-font wordmark, footer shows the logo and tagline
+- Fonts: added `@fontsource-variable/bricolage-grotesque`; removed `@fontsource-variable/syne`, `@fontsource-variable/martian-mono`, `@fontsource/chakra-petch` (`package.json`, `app/layout.tsx`)
+- `app/layout.tsx` viewport is now `themeColor: #F7F1E6`, `colorScheme: light`
+- `app/opengraph-image.tsx`, `app/icon.tsx`, `app/apple-icon.tsx` moved to the new palette
+- Docs: rewrote `docs/ai/STATUS.md` and `docs/ai/ARCHITECTURE.md`; updated `PROJECT.md`, `DECISIONS.md` (six new entries, two marked superseded) and `AGENTS.md`
+**Why:** The owner paused the GTM offer and wants `main` to sell what the business actually does today: lead gen and software for local businesses, UK now and US later. They asked for a warmer, straightforward feel and a meeting-first site.
+**Notes / gotchas:** Not committed or pushed. **Pushing this to `main` replaces the live site at `run-the-reach.vercel.app`.** Verified: `npm run lint` clean; `npm run build` → `✓ Compiled successfully`, 5 static routes; checked in the browser at desktop and 375px with `scrollWidth === clientWidth` (375). Commitment lines drafted from the owner's answers need confirming; STATUS › Watch out lists them, chiefly "one business per trade, per area". To use the browser pane, the owner's other project's dev server (`techtron-auto`, launched by the Claude app on port 3000) was stopped with their permission; it has to be restarted from that project. No test data or external records were created.
+
+## 2026-10-24 — Created the `GTM` branch
+
+**Type:** config
+**Tool:** Claude Code (Opus 5.5)
+**What changed:**
+- Created branch `GTM` from `main` at `d1957e6` and pushed it to `origin/GTM`, tracking set up
+- No file changes; `GTM` and `main` are identical
+**Why:** Owner asked for a separate `GTM` branch as a copy of `main`
+**Notes / gotchas:** The local checkout was left on `main`. Setting the upstream needed a write to `.git/config`, which the Claude Code sandbox blocks; `git push -u` pushes the branch but fails that step. Vercel will likely build a preview deployment for the new branch.
+
 ## 2026-10-24 — Dummy file to test the GitHub → Vercel deploy hook
 
 **Type:** config
@@ -10,7 +89,9 @@ All changes to this project, newest first. Every AI tool and human must add an e
 - Added `public/deploy-test.txt`, a throwaway static file served at `/deploy-test.txt`
 - Committed the previously uncommitted `docs/` folder and the `AGENTS.md` / `CLAUDE.md` edits from 2026-09-28 (user asked for the commit in that message)
 **Why:** The owner wanted to confirm this checkout is the right one and that pushes reach Vercel. A static file in `public/` is the cheapest visible proof: if it loads on the deployed domain, the hook works.
-**Notes / gotchas:** `public/deploy-test.txt` is disposable — delete it once the deploy is confirmed. The repo has no `.vercel/` directory, so this project is not linked via the Vercel CLI in this checkout; any deploy would have to come from the Vercel dashboard's GitHub integration on `azizul-orvee/run-the-reach`. Nothing was pushed.
+**Notes / gotchas:** Pushed to `origin/main` at the owner's request in the same session. **Result of the test: Vercel is connected and auto-deployed the push** — `https://run-the-reach.vercel.app/deploy-test.txt` serves the file. `public/deploy-test.txt` is disposable and can be deleted now.
+
+This session first reported the opposite, wrongly, from two non-signals: the absent `.vercel/` directory (only means the CLI was never run here) and a 404 on the repo's GitHub `/deployments` page (Vercel's integration creates no GitHub Deployment records for this repo). **To check deploy status from a terminal, fetch the deployed URL** — do not infer it from local files or from GitHub's deployments page.
 
 ## 2026-09-28 — Added Hard rules to AGENTS.md
 

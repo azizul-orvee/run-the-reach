@@ -16,7 +16,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## What this is
 
-Marketing site for **Run the Reach**, a one-person GTM-engineering agency selling *signal-based outbound* to seed-stage B2B SaaS founders. The pitch: watch for buying signals (funding rounds, sales hires, new sales leaders, tech-stack changes) and email those accounts the week the signal lands. It is a single-page static site; the only conversion action is the CTA "Get 25 free leads", which points at one link set in config.
+Marketing site for **Run the Reach**, an agency selling **customer acquisition systems for local businesses**: exclusive leads from Google Ads (pay-per-lead or managed), plus the AI follow-up and custom software that turn those leads into booked jobs. It is a small static site (homepage, About, Terms, Privacy); the only conversion action is the CTA "Book a call", which points at one link set in config. There are deliberately no prices on the site. The positioning is **AI-first**: keep AI visible in new copy.
+
+The previous version of the site (signal-based outbound for SaaS founders) is preserved on the `GTM` branch.
 
 ## Read these next
 
@@ -31,15 +33,16 @@ Marketing site for **Run the Reach**, a one-person GTM-engineering agency sellin
 - **Stack:** Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS v4
 - **Run locally:** `npm run dev` → http://localhost:3000
 - **Typecheck:** `npm run lint` (it is `tsc --noEmit`, not ESLint)
-- **Deploy:** Vercel (not yet linked — see STATUS)
+- **Deploy:** Vercel — pushing to `main` auto-deploys to `run-the-reach.vercel.app`
 - **Package manager:** npm
 
 ## Conventions
 
-- **All copy, prices and links live in `content/site.ts`.** Never hardcode user-facing text in a component. Each section exports its own config object (`hero`, `signals`, `loop`, `trace`, `about`, `pricing`, `faq`, `finalCta`).
-- **Headlines mark accent words with pipes:** `"The signals we |scan for|."` renders the piped part in amber via `<Accented>` in `components/section.tsx`. Use `plain()` from `content/site.ts` for plain-text contexts (OG image).
-- **Server Components by default.** Only `components/reveal.tsx` is `"use client"`. The radar is pure CSS/SVG with no JS — keep it that way.
-- **Colours and fonts come from CSS custom properties** in `app/globals.css` (`--paper`, `--accent`, `--ink`, …) exposed to Tailwind via `@theme inline`. Use the token classes (`text-accent`, `bg-slip`), never raw hex.
+- **All copy and links live in `content/`.** Never hardcode user-facing text in a component. `content/site.ts` holds the homepage and shared copy, one export per section (`hero`, `problem`, `ai`, `services`, `how`, `trades`, `promises`, `about`, `faq`, `finalCta`, plus `site`, `nav`, `footer`); `content/pages.ts` holds `/about`; `content/legal.ts` holds `/terms` and `/privacy`.
+- **Every new page exports `metadata = pageMetadata({...})`** from `lib/metadata.ts`, or it inherits the homepage's canonical URL and OpenGraph block.
+- **Headlines mark accent words with pipes:** `"More booked jobs. |Not just more clicks.|"` draws the piped part with the highlighter stroke via `<Accented>` in `components/section.tsx`. Use `plain()` from `content/site.ts` for plain-text contexts (OG image).
+- **Server Components by default.** Only `components/reveal.tsx` is `"use client"`. The hero phone animation is pure CSS with no JS — keep it that way.
+- **Colours and fonts come from CSS custom properties** in `app/globals.css` (`--paper`, `--accent`, `--ink`, `--highlight`, …) exposed to Tailwind via `@theme inline`. Use the token classes (`bg-accent`, `bg-slip`), never raw hex. The burnt-orange accent is for the CTA button; don't spread it around.
 - **Every animation needs a `prefers-reduced-motion` opt-out** in the media block at the bottom of `app/globals.css`.
 - **Grid children that contain nowrap text need `min-w-0`** or the track sizes to min-content and overflows the page. See DECISIONS.
 - Test every layout change at **375px** width before calling it done.
@@ -47,9 +50,11 @@ Marketing site for **Run the Reach**, a one-person GTM-engineering agency sellin
 ## Don't touch without asking
 
 - The `<!-- BEGIN:nextjs-agent-rules -->` block at the top of this file — `next dev` rewrites it.
-- The colour tokens and font stack in `app/globals.css` — the visual theme (dark + amber + Syne/Instrument Sans/Martian Mono/Chakra Petch) is fixed by the owner.
+- The colour tokens and font stack in `app/globals.css` — the visual theme (warm cream + ink + burnt orange, Bricolage Grotesque/Instrument Sans) is fixed by the owner.
 - The `[BRACKET]` placeholders in `content/site.ts` — they are deliberate; the owner fills them in.
-- Claims in `faq` and `about` copy — these are commitments about how the business operates, not marketing filler.
+- Claims in `faq`, `about`, `promises` and `ai` copy (exclusive leads, one business per trade per area, the ad-spend figure, what the AI does) — these are commitments about how the business operates, not marketing filler.
+- `content/legal.ts` — the Terms and Privacy text are drafts the owner must have reviewed; don't change their substance without asking.
+- Don't add prices or results figures. The site is meeting-first by owner decision.
 
 ## 🚫 Hard rules (MANDATORY for every AI tool)
 

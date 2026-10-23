@@ -1,10 +1,15 @@
 /**
- * All copy, prices, links and metadata live here.
- * Edit this file to change the page — no component changes needed.
+ * Homepage copy, shared links and metadata live here.
+ * The About page's copy is in content/pages.ts, and the Terms and Privacy text in content/legal.ts.
+ * Edit these files to change the site — no component changes needed.
  * Anything in [BRACKETS] is a placeholder to replace.
  *
- * Headlines use `|pipes|` to mark the words rendered in the amber accent:
- *   "Your next customers are sending signals. |We catch them.|"
+ * Headlines use `|pipes|` to mark the words drawn with the highlighter stroke:
+ *   "More booked jobs. |Not just more clicks.|"
+ *
+ * Copy is UK English and deliberately names no country or city, so the site
+ * works unchanged when the US market opens. No prices and no results figures:
+ * every CTA leads to a call, and pricing is discussed there.
  */
 
 /** Strips the accent markers — for plain-text contexts like the OG image. */
@@ -16,220 +21,264 @@ export const site = {
   /** Used for metadataBase / OpenGraph. Or set NEXT_PUBLIC_SITE_URL in Vercel. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://runthereach.com",
   founder: "[YOUR NAME]",
-  email: "[hello@domain.com]",
+  email: "contact@runthereach.com",
   linkedin: "[LINKEDIN URL]",
-  /** Where every CTA on the page points. */
-  booking: "[BOOKING OR FORM LINK]",
+  /** Where every CTA on the page points — a booking page (Calendly, Cal.com, etc.). */
+  booking: "[BOOKING LINK]",
   /** The CTA label, used everywhere. */
-  cta: "Get 25 free leads",
-  motto: "We scan for buyers. You take the meetings.",
-  title: "Run the Reach — Signal-based outbound for seed-stage B2B SaaS",
+  cta: "Book a call",
+  motto: "More calls. More booked jobs.",
+  title: "Run the Reach — AI-first customer acquisition for local businesses",
   description:
-    "We watch for buying signals — funding, hiring, new sales leaders, tech changes — and reach out the week they matter. Signal-based outbound for seed-stage B2B SaaS.",
-  tagline: "Signal-based outbound for seed-stage B2B SaaS.",
+    "Exclusive leads from Google Ads, and AI that answers, follows up and books every one in. AI-first customer acquisition for local businesses.",
+  tagline: "AI-first customer acquisition for local businesses.",
 };
 
+/** Links point at "/#…" so they work from every page, not just the homepage. */
 export const nav = {
   links: [
-    { label: "The Radar Loop", href: "#loop" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "About", href: "#about" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Our AI", href: "/#ai" },
+    { label: "Services", href: "/#services" },
+    { label: "How it works", href: "/#how" },
+    { label: "About", href: "/about" },
+    { label: "FAQ", href: "/#faq" },
   ],
-  ctaShort: "25 leads",
 };
 
 export const hero = {
-  eyebrow: "Signal-based outbound · seed-stage B2B SaaS",
-  headline: "Your next customers are sending signals. |We catch them.|",
-  sub: "Most outbound blasts a static list and hopes. We watch for the moments that create budget — a round closed, a sales hire, a new VP, a stack change — and reach out that week, while the need is still open.",
-  secondaryCta: "See how it works",
-  /** Blips that fade in and out on the hero radar. */
-  blips: [
-    { label: "Acme", meta: "raised $2M seed" },
-    { label: "Nova", meta: "hiring first SDR" },
-    { label: "Lumen", meta: "new VP Sales" },
-    { label: "Stackr", meta: "switched to HubSpot" },
+  eyebrow: "AI-first customer acquisition for local businesses",
+  headline: "More booked jobs. |Not just more clicks.|",
+  sub: "We bring you exclusive leads from people searching for your service right now. Then our AI answers, follows up and books every one in, even while you’re on a job.",
+  secondaryCta: "See our AI at work",
+  /** Trust points shown under the buttons. */
+  points: [
+    "AI replies to every lead in seconds",
+    "Every lead is yours alone",
+    "One business per trade, per area",
+    "Seven figures of Google Ads spend managed",
+  ],
+  /**
+   * The phone in the hero. These are illustrative, not a real customer.
+   * `kind` picks the icon and colour: lead = accent, reply = ink, booked = green.
+   */
+  phone: {
+    time: "09:41",
+    notifications: [
+      { kind: "lead", app: "New enquiry", title: "Boiler stopped working", body: "“No heating or hot water. Can someone come out today?”", when: "now" },
+      { kind: "reply", app: "AI reply sent", title: "To: Sarah", body: "“Hi Sarah, thanks for getting in touch. We can come out today. Which time suits?”", when: "now" },
+      { kind: "booked", app: "Job booked by AI", title: "Today, 2:00pm", body: "Added to your calendar. Reminder sent to Sarah.", when: "2m" },
+    ],
+    caption: "Handled by AI while you’re on another job.",
+  },
+};
+
+export const problem = {
+  tag: "The problem",
+  headline: "Most marketing gets you clicks. |You need customers.|",
+  sub: "Clicks don’t pay the bills. Between the ad and the invoice, most local businesses lose plenty of people who were ready to hire them.",
+  leaks: [
+    {
+      icon: "missed" as const,
+      name: "Missed calls",
+      body: "You’re up a ladder or under a car. The phone rings out, and they call the next name on Google.",
+    },
+    {
+      icon: "clock" as const,
+      name: "Slow replies",
+      body: "An enquiry sits for a few hours. By the time you reply, someone else has already booked the job.",
+    },
+    {
+      icon: "quote" as const,
+      name: "Quotes nobody chases",
+      body: "The quote goes out and nobody follows up. People meant to say yes. They just forgot.",
+    },
+    {
+      icon: "shared" as const,
+      name: "Shared leads",
+      body: "Lead sites sell the same enquiry to several companies at once. Now you’re racing them on price.",
+    },
   ],
 };
 
-export const signals = {
-  tag: "◉ SIGNALS",
-  headline: "The signals we |scan for|.",
-  sub: "Each one is a reason someone has to buy now rather than someday. We watch all of them, continuously.",
-  cards: [
+export const ai = {
+  tag: "Our AI",
+  headline: "Your leads, worked by |AI that never clocks off|.",
+  sub: "AI-first means the jobs that slip when you’re busy get done by AI instead: in seconds, day and night, in your business’s name. We build it ourselves and set it up around how you work.",
+  features: [
     {
-      name: "Funding round",
-      why: "New budget, and a board asking where the growth is going to come from.",
-      mock: { title: "Acme raised $2M seed", meta: "Funding · 2m ago", tag: "NEW" },
+      icon: "phone" as const,
+      name: "AI receptionist",
+      body: "Answers the calls you can’t take, gets the details and books the job, any time of day.",
     },
     {
-      name: "Hiring sales roles",
-      why: "A company building a sales team is building the stack that team will use.",
-      mock: { title: "Nova posted: Account Executive", meta: "Hiring · 1d ago", tag: "OPEN" },
+      icon: "reply" as const,
+      name: "Instant replies",
+      body: "Every enquiry from your ads and website gets a reply in seconds, not hours.",
     },
     {
-      name: "New sales leader",
-      why: "New leaders rip out what they inherited and buy their own tools in the first 90 days.",
-      mock: { title: "Lumen · new VP Sales", meta: "Job change · 4d ago", tag: "90D" },
+      icon: "missed" as const,
+      name: "Missed-call text-back",
+      body: "Miss a call and the customer gets a text straight away, before they ring someone else.",
     },
     {
-      name: "Tech stack change",
-      why: "If they just swapped a core GTM tool, the rest of the stack is in play too.",
-      mock: { title: "Stackr switched to HubSpot", meta: "Stack · 6d ago", tag: "SWAP" },
+      icon: "quote" as const,
+      name: "Quote follow-up",
+      body: "Chases every quote you send, politely and on time, until you get a yes or a no.",
     },
     {
-      name: "Website visitor",
-      why: "They already came looking. This is the warmest signal you will ever get.",
-      mock: { title: "3 visits to /pricing", meta: "Intent · this week", tag: "WARM" },
+      icon: "calendar" as const,
+      name: "Smart booking",
+      body: "Customers pick a slot that suits you. It lands in your calendar and a reminder goes out.",
     },
     {
-      name: "Competitor churn",
-      why: "Someone leaving a competitor is shopping right now, with a shortlist already open.",
-      mock: { title: "Orbit dropped a competitor", meta: "Churn · 2w ago", tag: "SHOP" },
+      icon: "trend" as const,
+      name: "AI-tuned Google Ads",
+      body: "Automation watches your campaigns and moves budget to the searches that turn into jobs.",
+    },
+  ],
+  note: "And when you need something no off-the-shelf tool does, we build custom AI software for it.",
+};
+
+export const services = {
+  tag: "Services",
+  headline: "Three ways in. |One goal: booked jobs.|",
+  sub: "We’ll work out which fits you on the call. Many businesses start with leads and grow into the full AI system.",
+  ctaNote: "Not sure which fits? That’s what the call is for.",
+  items: [
+    {
+      name: "Pay per lead",
+      lead: "We run the ads with our own budget. You pay for the leads we send you.",
+      points: ["We fund the advertising", "Every lead exclusive to you", "No ad account to manage"],
+      featured: false,
+    },
+    {
+      name: "Managed Google Ads",
+      lead: "We take over your Google Ads and run it with automation and AI doing the heavy lifting, so your budget goes on people ready to hire you.",
+      points: ["Your account, your budget", "AI-assisted bidding and targeting", "Built around leads, not clicks"],
+      featured: false,
+    },
+    {
+      name: "The full AI system",
+      label: "Most complete",
+      lead: "The leads, plus AI that catches every one: an AI receptionist, instant replies, follow-ups and booking, with custom software where off-the-shelf tools fall short.",
+      points: ["Leads from Google Ads", "AI receptionist and replies", "Custom AI tools built for you"],
+      featured: true,
     },
   ],
 };
 
-export const loop = {
-  tag: "◉ LOOP",
-  headline: "The |Radar Loop|.",
-  sub: "Four moves, running continuously. Every pass teaches the next one what to look for.",
-  center: "The Radar Loop",
+export const how = {
+  tag: "How it works",
+  headline: "One lead, |start to finish|.",
+  sub: "What happens when someone near you needs your help.",
   steps: [
-    { name: "Scan", body: "We watch your market for the signals that create budget." },
-    { name: "Lock on", body: "Each account gets verified contacts and an AI research pass." },
-    { name: "Reach out", body: "A personalised email that names the signal, from warmed inboxes." },
-    { name: "Learn", body: "Replies feed back in. What lands gets scaled, what misses gets cut." },
+    { name: "They search", body: "Something breaks. They grab their phone and search Google for someone nearby who can help today." },
+    { name: "They find you", body: "Your ad sits at the top of the results and sends them to a page built to get them to call or enquire." },
+    { name: "AI replies instantly", body: "Even when you’re mid-job, our AI replies straight away by text, email or phone, and answers their questions." },
+    { name: "AI books it in", body: "It offers a time that suits you, adds the job to your calendar and sends a reminder. You just turn up." },
   ],
-  footnote: "Then straight back to Scan. The list is never finished.",
 };
 
-export const trace = {
-  tag: "◉ TRACE",
-  headline: "One signal, |start to finish|.",
-  sub: "An illustration of the flow, using an example account. Not a real client.",
-  detected: {
-    label: "Signal detected",
-    title: "Acme raised $2M seed",
-    meta: "Funding · detected Tuesday 09:14",
-  },
-  research: {
-    label: "Research pass",
-    bullets: [
-      "Series unknown → seed, led by [Investor]",
-      "Headcount 11 → 14 in the last 60 days",
-      "Two open sales roles, none in ops",
-      "No dedicated RevOps or CRM admin yet",
-    ],
-  },
-  email: {
-    label: "The email it produced",
-    from: "you@yourdomain.com",
-    to: "dana@acme.com",
-    subject: "your first two sales hires",
-    /** Each line is a row of parts. `hl: true` renders in the accent colour. */
-    lines: [
-      [{ text: "Hi Dana," }],
-      [
-        { text: "Congrats on the " },
-        { text: "$2M seed", hl: true },
-        { text: " — saw it land Tuesday." },
-      ],
-      [
-        { text: "Noticed you have " },
-        { text: "two open sales roles", hl: true },
-        { text: " and nobody on ops yet. That order usually means the first reps spend their first month building lists instead of selling." },
-      ],
-      [{ text: "That is the part we run for companies at your stage. Worth fifteen minutes?" }],
-      [{ text: "— [YOUR NAME]" }],
-    ],
-    note: "Amber is the part that came from the signal, not a template.",
-  },
+export const trades = {
+  tag: "Who we help",
+  headline: "Built for |local trades|.",
+  sub: "We’ve helped businesses like these grow. If your customers search Google when they need you, we can probably help you too.",
+  list: [
+    "Roofers",
+    "Boiler & heating engineers",
+    "HVAC engineers",
+    "Locksmiths",
+    "Auto locksmiths",
+    "Car key replacement",
+    "Recovery & towing",
+  ],
+  more: "…and other local services",
+};
+
+export const promises = {
+  tag: "Why Run the Reach",
+  headline: "Straight terms. |No surprises.|",
+  sub: "A few things that are true for every business we work with.",
+  items: [
+    {
+      icon: "lock" as const,
+      name: "Your leads are yours",
+      body: "Every lead we send is exclusive to you. It never goes to a competitor.",
+    },
+    {
+      icon: "pin" as const,
+      name: "One business per area",
+      body: "We work with one business per trade in each area. We’ll never be working for the company down the road.",
+    },
+    {
+      icon: "trend" as const,
+      name: "Proven on real budgets",
+      body: "We’ve managed seven figures of Google Ads spend. You get that experience from day one, not a junior learning on your money.",
+    },
+    {
+      icon: "sparkles" as const,
+      name: "AI-first, built by us",
+      body: "Most ad agencies stop at the click. We build the AI that turns clicks into booked jobs, and tune it to how your business works.",
+    },
+  ],
 };
 
 export const about = {
-  tag: "◉ OPERATOR",
-  headline: "Built by an |engineer|.",
+  tag: "Who’s behind it",
+  headline: "A real person, |not a call centre|.",
   /** Drop a photo at public/founder.jpg. Until then a placeholder frame shows. */
   photo: "/founder.jpg",
   name: "[YOUR NAME]",
-  role: "Founder & GTM Engineer",
+  role: "Founder, Run the Reach",
   lines: [
-    "I spent years writing JavaScript before I ever wrote a cold email. Then I watched good companies lose deals to worse ones purely because nobody was watching for the right moment.",
-    "So I build outbound the way I built software: a system you can inspect, measure and fix. Not a black box, and not a person you hope stays motivated.",
-    "You work with me directly. There is no account manager layer, and I will tell you plainly when your offer is the problem rather than your targeting.",
+    "I build software and run Google Ads, and for the last three years I’ve done both for local businesses: roofers, locksmiths, heating engineers, recovery firms and more.",
+    "The pattern I kept seeing was simple. Plenty of people wanted to hire them, and too many slipped away before they did.",
+    "Run the Reach is how I fix that: the leads, and the AI that turns them into jobs.",
   ],
-};
-
-export const pricing = {
-  tag: "◉ PRICING",
-  headline: "Two ways to |run it|.",
-  plans: [
-    {
-      name: "First Sweep",
-      price: "$[PRICE]",
-      unit: "one-time · 30 days",
-      body: "One full pass of the loop, set up in your accounts. The fastest way to see whether signal-based outbound works for your market.",
-      features: [
-        "ICP and signal definition",
-        "Domains, inboxes and warmup",
-        "First signal list, enriched and verified",
-        "First campaign written and launched",
-        "A readout of what the replies told us",
-      ],
-      highlight: false,
-    },
-    {
-      name: "Always On",
-      price: "$[PRICE]",
-      unit: "/month · 3-month minimum",
-      body: "The radar stays on. New signals every week, new sequences every week, and a loop that keeps tightening.",
-      features: [
-        "Everything in First Sweep",
-        "Continuous signal scanning",
-        "Fresh lists and sequences weekly",
-        "Reply handling and routing",
-        "Weekly readout of what is working",
-      ],
-      highlight: true,
-    },
-  ],
-  note: "Everything runs in your accounts. You own it all.",
+  more: "More about us",
 };
 
 export const faq = {
-  tag: "◉ FAQ",
+  tag: "FAQ",
   headline: "Straight |answers|.",
   items: [
     {
-      q: "How is this different from buying a lead list?",
-      a: "A list tells you who exists. A signal tells you who has a reason to move this month. We are not selling you 10,000 rows — we are watching a defined market and surfacing the handful of accounts where something just changed, then writing to those.",
+      q: "Are the leads shared with other businesses?",
+      a: "No. Every lead we send you is exclusive. It doesn’t go to anyone else.",
     },
     {
-      q: "Do I need Clay or other tools?",
-      a: "No. You need a domain budget and an inbox provider. Everything else I set up in accounts that belong to you, and I will tell you what each one costs before we buy it. There is no markup on tooling.",
+      q: "Will you work with my competitors?",
+      a: "Not in your area. We work with one business per trade in each area, so if we’re working with you, we’re not working with the company down the road.",
     },
     {
-      q: "How long until emails go out?",
-      a: "Infrastructure is live in week one. Then domains and inboxes need two to three weeks of warmup before they send. Skipping warmup is how you burn a domain permanently, so I do not skip it. Realistically: first sends in week three or four.",
+      q: "What does “AI-first” actually mean?",
+      a: "It means AI does the jobs that slip when you’re busy: replying to enquiries in seconds, answering calls you can’t take, chasing quotes and booking jobs in. We set it up around your business and the way you talk to customers. You do the work; the AI keeps the phone side running.",
     },
     {
-      q: "Will this hurt my main domain?",
-      a: "No, because we never send from it. Outbound goes out on separate domains bought for the purpose, with their own authentication. If one gets burned, your main domain and your team's email are untouched.",
+      q: "How much does it cost?",
+      a: "It depends on how we work together (pay per lead, managing your ads, or the full AI system) and on your trade and area. We’ll go through it properly on the call, once we know what you need.",
     },
     {
-      q: "What do you need from me?",
-      a: "A clear description of who you sell to and what you charge, one hour up front to pull it out of your head, and someone who can answer a reply within a day. That is genuinely it.",
+      q: "What kinds of businesses do you work with?",
+      a: "Mostly local trades and services, the kind of business people search for on Google when they need help fast. We’ve worked with roofers, heating engineers, locksmiths, recovery firms and more.",
+    },
+    {
+      q: "What happens on the call?",
+      a: "We ask about your business, the work you want more of and where your customers come from now. Then we tell you honestly whether we can help, and how. No hard sell.",
     },
   ],
 };
 
 export const finalCta = {
-  headline: "Want to see what's |on your radar|?",
-  note: "Tell me your ICP, I'll send 25 signal-based leads within 48 hours. No call needed.",
+  headline: "Let’s see if we’re |a good fit|.",
+  sub: "A short call about your business and your area. If we can help, we’ll show you how. If your trade is already taken in your area, we’ll tell you straight away.",
 };
 
 export const footer = {
   linkedinLabel: "LinkedIn",
+  links: [
+    { label: "About us", href: "/about" },
+    { label: "Terms of use", href: "/terms" },
+    { label: "Privacy policy", href: "/privacy" },
+  ],
 };

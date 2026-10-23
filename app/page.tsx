@@ -1,22 +1,18 @@
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
-import { About, Faq, FinalCta, Hero, Loop, Pricing, Signals, Trace } from "@/components/sections";
+import { About, Ai, Faq, FinalCta, Hero, How, Problem, Promises, Services, Trades } from "@/components/sections";
 
 export default function Home() {
   return (
     <>
-      <Nav />
-      <main>
-        <Hero />
-        <Signals />
-        <Loop />
-        <Trace />
-        <About />
-        <Pricing />
-        <Faq />
-        <FinalCta />
-      </main>
-      <Footer />
+      <Hero />
+      <Problem />
+      <Ai />
+      <Services />
+      <How />
+      <Trades />
+      <Promises />
+      <About />
+      <Faq />
+      <FinalCta />
     </>
   );
 }
