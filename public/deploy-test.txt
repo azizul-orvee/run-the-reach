@@ -1,0 +1,4 @@
+Run the Reach — deploy connectivity test
+Committed: 2026-10-24
+If you can read this at https://<your-vercel-domain>/deploy-test.txt then
+GitHub -> Vercel auto-deploy is working. Safe to delete this file.
